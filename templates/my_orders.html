@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Orders</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+    <h1>My Order History</h1>
+
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>
+                    {{ order['product_name'] }} — Quantity: {{ order['quantity'] }} — ${{ "%.2f"|format(order['price']) }}
+                    <br>
+                    <small>Ordered on: 
+                        {% if order['order_date'] %}
+                            {{ order['order_date'].split('.')[0].replace('T', ' ') }}
+                        {% else %}
+                            Unknown Date
+                        {% endif %}
+                    </small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven’t ordered anything yet.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}">Back to Store</a>
+</body>
+</html>

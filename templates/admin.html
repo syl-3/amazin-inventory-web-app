@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+    <h1>Admin Panel</h1>
+
+    {% if session.get("username") %}
+        <p>Logged in as <strong>{{ session['username'] }}</strong> ({{ session['role'] }})</p>
+    {% endif %}
+
+    <h2>Add New Product</h2>
+    <form method="POST" action="{{ url_for('add_product') }}">
+        <input type="text" name="name" placeholder="Product Name" required>
+        <input type="number" step="0.01" name="price" placeholder="Price" required>
+        <input type="number" name="stock" placeholder="Stock" required>
+        <select name="category" required>
+            <option value="Grocery">Grocery</option>
+            <option value="Apparel">Apparel</option>
+            <option value="Sports">Sports Equipment</option>
+        </select>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <h2>Current Products</h2>
+    <ul>
+        {% for product in products %}
+            <li>
+                <strong>{{ product['name'] }}</strong>
+                — ${{ "%.2f"|format(product['price']) }},
+                Stock: {{ product['stock'] }},
+                Category: {{ product['category'] }}
+
+                <form method="POST" action="{{ url_for('delete_product') }}" style="display:inline;">
+                    <input type="hidden" name="product_id" value="{{ product['id'] }}">
+                    <button type="submit">Delete</button>
+                </form>
+
+                <form method="GET" action="{{ url_for('edit_product', product_id=product['id']) }}" style="display:inline;">
+                    <button type="submit">Edit</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('index') }}">Back to Store</a>
+</body>
+</html>

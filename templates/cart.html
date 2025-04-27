@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Cart</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+                <li class="flash {{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endwith %}
+
+    <h1>Your Shopping Cart</h1>
+
+    {% if cart %}
+        <ul>
+            {% for item in cart %}
+                <li>
+                    <strong>{{ item.product_name }}</strong> - ${{ "%.2f"|format(item.price) }} × {{ item.quantity }}
+                    = ${{ "%.2f"|format(item.price * item.quantity) }}
+                    <form action="{{ url_for('increment_cart_item') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                        <button type="submit">+</button>
+                    </form>
+                    <form action="{{ url_for('decrement_cart_item') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                        <button type="submit">−</button>
+                    </form>
+                    <form action="{{ url_for('remove_from_cart') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                        <button type="submit">Remove</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p><strong>Total:</strong> ${{ "%.2f"|format(total) }}</p>
+        <form action="{{ url_for('checkout') }}" method="POST">
+            <button type="submit">Checkout</button>
+        </form>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('index') }}">Continue Shopping</a>
+</body>
+</html>

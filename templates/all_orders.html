@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Orders</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+    <h1>All Customer Orders (CEO View)</h1>
+
+    {% if orders %}
+        <ul>
+            {% for order in orders %}
+                <li>
+                    {{ order['username'] }} ordered {{ order['product_name'] }}  
+                    — Quantity: {{ order['quantity'] }}  
+                    — ${{ "%.2f"|format(order['price']) }}  
+                    <br><small>Ordered on: {{ order['order_date'] }}</small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No orders have been placed yet.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}">Back to Store</a>
+</body>
+</html>

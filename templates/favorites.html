@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Favorites</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}">
+</head>
+<body>
+    <h1>Liked Products</h1>
+
+    {% if products %}
+        <ul>
+            {% for product in products %}
+                <li>
+                    <strong>{{ product['name'] }}</strong><br>
+                    Price: ${{ "%.2f"|format(product['price']) }}<br>
+                    Stock: {{ product['stock'] }}
+                    {% if product['stock'] == 0 %}
+                        <em> [Out of Stock]</em>
+                    {% else %}
+                        {% if session.get('role') == 'Customer' %}
+                        <form method="POST" action="{{ url_for('add_to_cart') }}" style="display:inline;">
+                            <input type="hidden" name="product_id" value="{{ product['id'] }}">
+                            <input type="hidden" name="product_name" value="{{ product['name'] }}">
+                            <input type="hidden" name="price" value="{{ product['price'] }}">
+                            <button type="submit">Add to Cart</button>
+                        </form>
+                        
+                        {% endif %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You don't have any favorites yet.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('index') }}">Back to Store</a>
+</body>
+</html>
