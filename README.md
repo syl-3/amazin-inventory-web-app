@@ -21,24 +21,6 @@ This project is a lightweight e-commerce storefront simulation built with Flask,
 
 ---
 
-## Technologies Used
-
-- Flask (Python web framework)
-- SQLite (relational database)
-- HTML5 and CSS3
-- Jinja2 (template rendering engine)
-
----
-
-## Live Site
-
-You can view the live app here:  
-[https://amazin-inventory-web-app.onrender.com](https://amazin-inventory-web-app.onrender.com)
-
-> Note: First load may take a few seconds due to free hosting server spin-up time.
-
----
-
 ## How to Explore (Log-in Credentials with Different Access Levels)
 
 By default, users will not be logged in. Create a new customer account or login with these sample accounts to explore all functionality.
@@ -54,6 +36,24 @@ By default, users will not be logged in. Create a new customer account or login 
 
 - **Visitors (not logged in):**  
   Can browse all available products but must sign up or log in to interact with the cart, favorites, or admin features.
+
+---
+
+## Technologies Used
+
+- Flask (Python web framework)
+- SQLite (relational database)
+- HTML5 and CSS3
+- Jinja2 (template rendering engine)
+
+---
+
+## Live Site
+
+You can view the live app here:  
+[amazin.fly.dev](https://amazin.fly.dev/)
+
+> Note: First load may take a few seconds due to free hosting server spin-up time.
 
 ---
 
